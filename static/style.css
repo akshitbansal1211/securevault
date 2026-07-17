@@ -1,0 +1,253 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+    li:hover {
+    color: #107fc9;
+}
+
+
+h1 {
+    color: #2c3e50;
+    border-bottom: 3px solid #2c3e50;
+    padding-bottom: 10px;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-top: 30px;
+}
+
+ul {
+    background-color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    border-radius: 8px;
+    margin: 20px 0;
+}
+form {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    max-width: 400px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #2980b9;
+}
+
+button {
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #23689e;
+}
+
+/* ===== Auth pages (Register / Login) — Vault theme ===== */
+
+body.auth-page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0B1220;
+    color: #E8ECF3;
+    font-family: 'Inter', Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.vault-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(201, 162, 39, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 162, 39, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+}
+
+.auth-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.brand h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: #E8ECF3;
+    border-bottom: none;
+    margin: 12px 0 4px;
+}
+
+.tagline {
+    color: #8B96AB;
+    font-size: 14px;
+}
+
+.vault-dial {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto;
+    border: 3px solid #C9A227;
+    border-radius: 50%;
+    position: relative;
+    animation: spin 6s linear infinite;
+}
+
+.vault-dial-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 20px;
+    background: #C9A227;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.auth-form {
+    background: rgba(19, 27, 46, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 162, 39, 0.2);
+    border-radius: 12px;
+    padding: 32px 36px;
+    width: 340px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.auth-form h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    color: #E8ECF3;
+    margin: 0 0 20px;
+}
+
+.auth-form label {
+    display: block;
+    color: #8B96AB;
+    font-size: 13px;
+    margin-top: 14px;
+    margin-bottom: 4px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 10px 12px;
+    background: #0F172A;
+    border: 1px solid #2A3547;
+    border-radius: 6px;
+    color: #E8ECF3;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #C9A227;
+    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+}
+
+.auth-form button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 12px;
+    background: #C9A227;
+    color: #0B1220;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.auth-form button:hover {
+    background: #E0B93B;
+    transform: translateY(-1px);
+}
+
+.switch-link {
+    margin-top: 18px;
+    color: #8B96AB;
+    font-size: 14px;
+}
+
+.switch-link a {
+    color: #C9A227;
+}
