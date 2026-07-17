@@ -10,3 +10,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 3 complete (CSS fundamentals, styled about.html)
+## Status
+- Day 4 complete (Flask routes, GET/POST, registration form with custom styled UI)
+
