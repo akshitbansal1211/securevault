@@ -16,3 +16,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 5 complete (SQLite integration, password hashing, registration saves real users)
+
+## Status
+- Day 6 complete (HTTP request/response, status codes, login form UI)
