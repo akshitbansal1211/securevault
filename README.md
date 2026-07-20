@@ -19,3 +19,7 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 6 complete (HTTP request/response, status codes, login form UI)
+
+## Status
+- Day 7 complete (sessions, cookies, login authentication working end-to-end)
+
