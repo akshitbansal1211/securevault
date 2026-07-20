@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_connection, init_db
+from auth import login_required
 app = Flask(__name__)
 app.secret_key = "dev-secret-key-change-this-later"
 init_db()  # creates the table if it doesn't exist yet, runs once at startup
@@ -59,11 +60,22 @@ def login():
     return render_template("login.html")
 
 @app.route("/dashboard")
+@login_required
 def dashboard():
-    if "user_id" not in session:
-        return redirect(url_for("login"))
     return f"Welcome to your dashboard, {session['username']}!"
+
+@app.route("/profile")
+@login_required
+def profile():
+    return f"This is {session['username']}'s profile page."
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
