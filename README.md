@@ -23,3 +23,6 @@ Enterprise Document Management System — built as a learning project covering f
 ## Status
 - Day 7 complete (sessions, cookies, login authentication working end-to-end)
 
+## Status
+- Day 8 complete (login_required decorator, route protection, logout)
+
