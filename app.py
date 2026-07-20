@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
-from werkzeug.security import generate_password_hash
+from flask import Flask, render_template, request, redirect, url_for, session
+from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_connection, init_db
-
 app = Flask(__name__)
+app.secret_key = "dev-secret-key-change-this-later"
 init_db()  # creates the table if it doesn't exist yet, runs once at startup
 
 
@@ -39,7 +39,30 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        conn = get_connection()
+        user = conn.execute(
+            "SELECT * FROM users WHERE username = ?", (username,)
+        ).fetchone()
+        conn.close()
+
+        if user and check_password_hash(user["password"], password):
+            session["user_id"] = user["id"]
+            session["username"] = user["username"]
+            return redirect(url_for("dashboard"))
+        else:
+            return "Invalid username or password", 401
+
     return render_template("login.html")
+
+@app.route("/dashboard")
+def dashboard():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+    return f"Welcome to your dashboard, {session['username']}!"
 
 
 if __name__ == "__main__":
