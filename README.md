@@ -28,6 +28,3 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 9 complete (dashboard page, Jinja2 templating, conditional rendering)
-git add .
-git commit -m "Update README for Day 9"
-git push
