@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SecureVault - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="dashboard-page">
+
+    <header class="dashboard-header">
+        <div class="brand-small">
+            <div class="vault-dial-small"></div>
+            <span>SecureVault</span>
+        </div>
+        <div class="user-info">
+            <span>Logged in as <strong>{{ username }}</strong></span>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <h1>Your Files</h1>
+
+        {% if files %}
+            <ul class="file-list">
+            {% for file in files %}
+                <li>{{ file }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-state">No files uploaded yet. Upload your first file to get started.</p>
+        {% endif %}
+    </main>
+
+</body>
+</html>

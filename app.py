@@ -62,7 +62,8 @@ def login():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    return f"Welcome to your dashboard, {session['username']}!"
+    files = []  # placeholder — real file list comes Day 13-14
+    return render_template("dashboard.html", username=session["username"], files=files)
 
 @app.route("/profile")
 @login_required
