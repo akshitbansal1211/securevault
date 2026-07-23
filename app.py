@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_connection, init_db
 from auth import login_required
@@ -27,14 +28,20 @@ def register():
         hashed_password = generate_password_hash(password)
 
         conn = get_connection()
-        conn.execute(
-            "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-            (username, email, hashed_password)
-        )
-        conn.commit()
-        conn.close()
+        try:
+            conn.execute(
+                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+                (username, email, hashed_password)
+            )
+            conn.commit()
+        except sqlite3.IntegrityError:
+            flash("Username or email already exists. Please choose another.", "error")
+            return redirect(url_for("register"))
+        finally:
+            conn.close()
 
-        return redirect(url_for("home"))
+        flash("Registration successful! Please log in.", "success")
+        return redirect(url_for("login"))
 
     return render_template("register.html")
 
@@ -55,7 +62,9 @@ def login():
             session["username"] = user["username"]
             return redirect(url_for("dashboard"))
         else:
-            return "Invalid username or password", 401
+
+            flash("Invalid username or password.", "error")
+            return redirect(url_for("login"))
 
     return render_template("login.html")
 
@@ -74,6 +83,7 @@ def profile():
 @app.route("/logout")
 def logout():
     session.clear()
+    flash("You have been logged out.", "success")
     return redirect(url_for("login"))
 
 
