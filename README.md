@@ -27,3 +27,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 9 complete (dashboard page, Jinja2 templating, conditional rendering)
+
+## Status
+- Day 10 complete (flash messages, error handling, Week 2 auth review)
