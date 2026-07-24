@@ -30,3 +30,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 10 complete (flash messages, error handling, Week 2 auth review)
+
+## Status
+- Day 11 complete (file handling theory, upload form UI, multipart/form-data)
