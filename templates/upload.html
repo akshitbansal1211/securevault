@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SecureVault - Dashboard</title>
+    <title>SecureVault - Upload</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
@@ -21,17 +21,23 @@
     </header>
 
     <main class="dashboard-main">
-        <h1>Your Files</h1>
-        <p><a href="/upload" class="switch-link">+ Upload a new file</a></p>
-        {% if files %}
-            <ul class="file-list">
-            {% for file in files %}
-                <li>{{ file }}</li>
+        <h1>Upload a File</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
             {% endfor %}
-            </ul>
-        {% else %}
-            <p class="empty-state">No files uploaded yet. Upload your first file to get started.</p>
-        {% endif %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+             <p style="color:#8B96AB; font-size:13px; margin-bottom:8px;">Accepted: images (jpg, png) and PDF files.</p>
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+        </form>
+
+        <p><a href="/dashboard" class="switch-link">← Back to Dashboard</a></p>
     </main>
 
 </body>

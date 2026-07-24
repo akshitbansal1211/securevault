@@ -86,6 +86,10 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for("login"))
 
+@app.route("/upload", methods=["GET", "POST"])
+@login_required
+def upload():
+    return render_template("upload.html", username=session["username"])
 
 if __name__ == "__main__":
     app.run(debug=True)

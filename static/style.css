@@ -358,3 +358,36 @@ body.dashboard-page {
     color: #e74c3c;
     border: 1px solid rgba(231, 76, 60, 0.3);
 }
+/* ===== Upload Form ===== */
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: rgba(19, 27, 46, 0.6);
+    border: 1px solid rgba(201, 162, 39, 0.15);
+    border-radius: 8px;
+    padding: 25px;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+.upload-form input[type="file"] {
+    color: #8B96AB;
+    font-size: 14px;
+}
+
+.upload-form button {
+    background: #C9A227;
+    color: #0B1220;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.upload-form button:hover {
+    background: #E0B93B;
+}
