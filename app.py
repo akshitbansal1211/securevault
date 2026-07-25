@@ -1,3 +1,6 @@
+import os
+import uuid
+from werkzeug.utils import secure_filename
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -5,6 +8,14 @@ from database import get_connection, init_db
 from auth import login_required
 app = Flask(__name__)
 app.secret_key = "dev-secret-key-change-this-later"
+UPLOAD_FOLDER = "static/uploads"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf"}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
 init_db()  # creates the table if it doesn't exist yet, runs once at startup
 
 
@@ -89,6 +100,25 @@ def logout():
 @app.route("/upload", methods=["GET", "POST"])
 @login_required
 def upload():
+    if request.method == "POST":
+        file = request.files.get("file")
+
+        if not file or file.filename == "":
+            flash("No file selected.", "error")
+            return redirect(url_for("upload"))
+
+        if not allowed_file(file.filename):
+            flash("Invalid file type. Only PNG, JPG, and PDF are allowed.", "error")
+            return redirect(url_for("upload"))
+
+        original_name = secure_filename(file.filename)
+        unique_name = f"{uuid.uuid4().hex}_{original_name}"
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], unique_name)
+        file.save(filepath)
+
+        flash(f"'{original_name}' uploaded successfully!", "success")
+        return redirect(url_for("dashboard"))
+
     return render_template("upload.html", username=session["username"])
 
 if __name__ == "__main__":
