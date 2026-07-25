@@ -1,13 +1,17 @@
 import os
-import uuid
-from werkzeug.utils import secure_filename
 import sqlite3
+import uuid
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+
 from database import get_connection, init_db
 from auth import login_required
+
 app = Flask(__name__)
 app.secret_key = "dev-secret-key-change-this-later"
+
 UPLOAD_FOLDER = "static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -16,7 +20,8 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-init_db()  # creates the table if it doesn't exist yet, runs once at startup
+
+init_db()  # creates the tables if they don't exist yet, runs once at startup
 
 
 @app.route("/")
@@ -56,6 +61,7 @@ def register():
 
     return render_template("register.html")
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -73,17 +79,18 @@ def login():
             session["username"] = user["username"]
             return redirect(url_for("dashboard"))
         else:
-
             flash("Invalid username or password.", "error")
             return redirect(url_for("login"))
 
     return render_template("login.html")
 
+
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    files = []  # placeholder — real file list comes Day 13-14
+    files = []  # placeholder — real file list comes Day 14
     return render_template("dashboard.html", username=session["username"], files=files)
+
 
 @app.route("/profile")
 @login_required
@@ -96,6 +103,7 @@ def logout():
     session.clear()
     flash("You have been logged out.", "success")
     return redirect(url_for("login"))
+
 
 @app.route("/upload", methods=["GET", "POST"])
 @login_required
@@ -116,11 +124,19 @@ def upload():
         filepath = os.path.join(app.config["UPLOAD_FOLDER"], unique_name)
         file.save(filepath)
 
+        conn = get_connection()
+        conn.execute(
+            "INSERT INTO files (owner_id, original_name, stored_name) VALUES (?, ?, ?)",
+            (session["user_id"], original_name, unique_name)
+        )
+        conn.commit()
+        conn.close()
+
         flash(f"'{original_name}' uploaded successfully!", "success")
         return redirect(url_for("dashboard"))
 
     return render_template("upload.html", username=session["username"])
 
+
 if __name__ == "__main__":
     app.run(debug=True)
-    
