@@ -36,3 +36,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 12 complete (upload backend, file validation, secure unique filenames)
+
+## Status
+- Day 13 complete (files table, foreign keys, upload metadata tracking)
