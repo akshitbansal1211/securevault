@@ -39,3 +39,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 13 complete (files table, foreign keys, upload metadata tracking)
+
+## Status
+- Day 14 complete (dashboard displays real uploaded files, per-user filtering, UTC-to-local timestamp conversion)
