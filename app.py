@@ -1,7 +1,7 @@
 import os
 import sqlite3
 import uuid
-
+from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -88,10 +88,24 @@ def login():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    files = []  # placeholder — real file list comes Day 14
-    return render_template("dashboard.html", username=session["username"], files=files)
+    conn = get_connection()
+    files = conn.execute(
+        "SELECT * FROM files WHERE owner_id = ? ORDER BY uploaded_at DESC",
+        (session["user_id"],)
+    ).fetchall()
+    conn.close()
 
+    IST = timezone(timedelta(hours=5, minutes=30))
+    files_local = []
+    for file in files:
+        file_dict = dict(file)
+        utc_time = datetime.strptime(file_dict["uploaded_at"], "%Y-%m-%d %H:%M:%S")
+        utc_time = utc_time.replace(tzinfo=timezone.utc)
+        local_time = utc_time.astimezone(IST)
+        file_dict["uploaded_at"] = local_time.strftime("%Y-%m-%d %I:%M %p")
+        files_local.append(file_dict)
 
+    return render_template("dashboard.html", username=session["username"], files=files_local)
 @app.route("/profile")
 @login_required
 def profile():

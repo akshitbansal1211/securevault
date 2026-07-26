@@ -391,3 +391,26 @@ body.dashboard-page {
 .upload-form button:hover {
     background: #E0B93B;
 }
+/* ===== File List Items ===== */
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(201, 162, 39, 0.1);
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-name {
+    color: #E8ECF3;
+    font-size: 14px;
+}
+
+.file-date {
+    color: #8B96AB;
+    font-size: 12px;
+}
