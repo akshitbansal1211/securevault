@@ -414,3 +414,14 @@ body.dashboard-page {
     color: #8B96AB;
     font-size: 12px;
 }
+
+.file-name {
+    color: #E8ECF3;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.file-name:hover {
+    color: #C9A227;
+    text-decoration: underline;
+}

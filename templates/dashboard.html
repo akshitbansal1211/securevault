@@ -37,7 +37,7 @@
     <ul class="file-list">
     {% for file in files %}
         <li class="file-item">
-            <span class="file-name">{{ file["original_name"] }}</span>
+            <a href="{{ url_for('download', file_id=file['id']) }}" class="file-name">{{ file["original_name"] }}</a>
             <span class="file-date">{{ file["uploaded_at"] }}</span>
         </li>
     {% endfor %}
