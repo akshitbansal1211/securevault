@@ -42,3 +42,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 14 complete (dashboard displays real uploaded files, per-user filtering, UTC-to-local timestamp conversion)
+
+## Status
+- Day 15 complete (file download, IDOR protection via ownership checks)
