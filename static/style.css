@@ -425,3 +425,26 @@ body.dashboard-page {
     color: #C9A227;
     text-decoration: underline;
 }
+
+/* ===== File Preview Link ===== */
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.preview-link {
+    font-size: 12px;
+    color: #8B96AB;
+    background: rgba(201, 162, 39, 0.1);
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.preview-link:hover {
+    background: rgba(201, 162, 39, 0.25);
+    color: #C9A227;
+}

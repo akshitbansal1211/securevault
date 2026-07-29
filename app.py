@@ -170,5 +170,23 @@ def download(file_id):
         download_name=file["original_name"]
     )
 
+@app.route("/preview/<int:file_id>")
+@login_required
+def preview(file_id):
+    conn = get_connection()
+    file = conn.execute(
+        "SELECT * FROM files WHERE id = ? AND owner_id = ?",
+        (file_id, session["user_id"])
+    ).fetchone()
+    conn.close()
+
+    if file is None:
+        abort(404)
+
+    return send_from_directory(
+        app.config["UPLOAD_FOLDER"],
+        file["stored_name"]
+    )
+
 if __name__ == "__main__":
     app.run(debug=True)

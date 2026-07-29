@@ -37,9 +37,15 @@
     <ul class="file-list">
     {% for file in files %}
         <li class="file-item">
-            <a href="{{ url_for('download', file_id=file['id']) }}" class="file-name">{{ file["original_name"] }}</a>
-            <span class="file-date">{{ file["uploaded_at"] }}</span>
-        </li>
+    <div class="file-info">
+        <a href="{{ url_for('download', file_id=file['id']) }}" class="file-name">{{ file["original_name"] }}</a>
+        {% set ext = file["original_name"].rsplit(".", 1)[1].lower() if "." in file["original_name"] else "" %}
+        {% if ext in ["png", "jpg", "jpeg"] %}
+            <a href="{{ url_for('preview', file_id=file['id']) }}" target="_blank" class="preview-link">Preview</a>
+        {% endif %}
+    </div>
+    <span class="file-date">{{ file["uploaded_at"] }}</span>
+</li>
     {% endfor %}
     </ul>
 {% else %}
