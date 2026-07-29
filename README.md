@@ -45,3 +45,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 15 complete (file download, IDOR protection via ownership checks)
+
+## Status
+- Day 16 complete (image preview, Content-Disposition, MIME type handling)
