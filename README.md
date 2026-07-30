@@ -48,3 +48,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 16 complete (image preview, Content-Disposition, MIME type handling)
+
+## Status
+- Day 17 complete (PDF preview, inline modal viewer, first client-side JavaScript)
