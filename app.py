@@ -87,11 +87,19 @@ def login():
 @app.route("/dashboard")
 @login_required
 def dashboard():
+    search_term = request.args.get("search", "").strip()
+
     conn = get_connection()
-    files = conn.execute(
-        "SELECT * FROM files WHERE owner_id = ? ORDER BY uploaded_at DESC",
-        (session["user_id"],)
-    ).fetchall()
+    if search_term:
+        files = conn.execute(
+            "SELECT * FROM files WHERE owner_id = ? AND original_name LIKE ? ORDER BY uploaded_at DESC",
+            (session["user_id"], f"%{search_term}%")
+        ).fetchall()
+    else:
+        files = conn.execute(
+            "SELECT * FROM files WHERE owner_id = ? ORDER BY uploaded_at DESC",
+            (session["user_id"],)
+        ).fetchall()
     conn.close()
 
     IST = timezone(timedelta(hours=5, minutes=30))
@@ -104,7 +112,7 @@ def dashboard():
         file_dict["uploaded_at"] = local_time.strftime("%Y-%m-%d %I:%M %p")
         files_local.append(file_dict)
 
-    return render_template("dashboard.html", username=session["username"], files=files_local)
+    return render_template("dashboard.html", username=session["username"], files=files_local, search_term=search_term)
 @app.route("/profile")
 @login_required
 def profile():
