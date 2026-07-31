@@ -51,3 +51,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 17 complete (PDF preview, inline modal viewer, first client-side JavaScript)
+
+## Status
+- Day 18 complete (search backend, SQL LIKE pattern matching, query parameters)
