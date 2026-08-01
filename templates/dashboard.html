@@ -21,7 +21,15 @@
     </header>
 
     <main class="dashboard-main">
-        <h1>Your Files</h1>
+    <h1>Your Files</h1>
+
+    <form action="/dashboard" method="GET" class="search-form">
+        <input type="text" name="search" placeholder="Search your files..." value="{{ search_term }}">
+        <button type="submit">Search</button>
+        {% if search_term %}
+            <a href="/dashboard" class="clear-search">Clear</a>
+        {% endif %}
+    </form>
         <main class="dashboard-main">
     <h1>Your Files</h1>
 
@@ -49,7 +57,11 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p class="empty-state">No files uploaded yet. Upload your first file to get started.</p>
+    {% if search_term %}
+        <p class="empty-state">No files match "{{ search_term }}".</p>
+    {% else %}
+        <p class="empty-state">No files uploaded yet. Upload your first file to get started.</p>
+    {% endif %}
 {% endif %}
 
     </main>
