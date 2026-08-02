@@ -531,3 +531,71 @@ body.dashboard-page {
 .clear-search:hover {
     color: #C9A227;
 }
+/* ===== Responsive Design ===== */
+
+@media (max-width: 600px) {
+    .auth-container {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .auth-form {
+        width: 100%;
+        max-width: 340px;
+        padding: 24px 20px;
+    }
+
+    .brand h1 {
+        font-size: 26px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px 20px;
+    }
+
+    .user-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dashboard-main {
+        padding: 0 20px;
+        margin: 24px auto;
+    }
+
+    .search-form {
+        flex-wrap: wrap;
+    }
+
+    .search-form input[type="text"] {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .file-info {
+        flex-wrap: wrap;
+    }
+
+    .preview-modal-content {
+        width: 92%;
+        padding: 16px;
+    }
+
+    body {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .upload-form {
+        max-width: 100%;
+    }
+}
