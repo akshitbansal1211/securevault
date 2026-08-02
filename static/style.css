@@ -107,7 +107,7 @@ body.auth-page {
     color: #E8ECF3;
     font-family: 'Inter', Arial, sans-serif;
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .vault-bg {
@@ -126,7 +126,7 @@ body.auth-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px;
+    padding: 20px;
     animation: fadeInUp 0.6s ease;
 }
 
