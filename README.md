@@ -60,3 +60,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 20 complete (responsive design, media queries, mobile-friendly layout)
+
+## Status
+- Day 21 complete (custom 404/500 pages, full edge case testing — auth, uploads, search, IDOR all verified)
