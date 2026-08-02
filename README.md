@@ -57,3 +57,6 @@ Enterprise Document Management System — built as a learning project covering f
 
 ## Status
 - Day 19 complete (search bar UI, GET form, contextual empty states)
+
+## Status
+- Day 20 complete (responsive design, media queries, mobile-friendly layout)
