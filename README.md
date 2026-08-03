@@ -1,65 +1,88 @@
-# SecureVault
-Enterprise Document Management System — built as a learning project covering full-stack web development, authentication, and file handling.
+# 🔐 SecureVault
 
-## Status
-🚧 In development — Day 1 complete (project setup + Flask hello world)
+**SecureVault** is an enterprise-style document management system built with Flask and SQLite — featuring secure user authentication, file upload/download, in-browser image and PDF preview, and search. Built from scratch as a hands-on learning project, with a deliberate focus on understanding *why* each piece works, not just making it work.
 
-## Status
-- Day 2 complete (HTML fundamentals, about.html page)
+## Features
 
-## Status
-- Day 3 complete (CSS fundamentals, styled about.html)
+- **User authentication** — registration and login with hashed passwords (Werkzeug/scrypt), session-based auth, and route protection via a custom decorator
+- **File management** — upload, download, and per-user file listing backed by a relational SQLite schema
+- **In-browser preview** — images and PDFs render directly in a modal, no download required
+- **Search** — filter your files by name using SQL `LIKE` pattern matching
+- **Responsive design** — fully usable on mobile and tablet screens, not just desktop
+- **Flash messaging** — clear success/error feedback across registration, login, upload, and logout
+- **Custom error pages** — branded 404/500 pages instead of raw Flask defaults
 
-## Status
-- Day 4 complete (Flask routes, GET/POST, registration form with custom styled UI)
+## Security
 
-## Status
-- Day 5 complete (SQLite integration, password hashing, registration saves real users)
+This project was built with real security practices in mind, not just "does it work":
 
-## Status
-- Day 6 complete (HTTP request/response, status codes, login form UI)
+- Passwords hashed with scrypt (via Werkzeug), never stored in plain text
+- All SQL queries parameterized — no string-concatenated queries, protecting against SQL injection
+- Session cookies signed via a secret key, `HttpOnly` flag enabled
+- Uploaded filenames sanitized (`secure_filename`) and given collision-proof unique names (UUID-based) to prevent path traversal and overwrite attacks
+- File uploads validated against an extension allow-list
+- Every file-access route (`download`, `preview`) enforces ownership checks (`WHERE id = ? AND owner_id = ?`) to prevent IDOR (Insecure Direct Object Reference) — verified through manual cross-account testing during development
 
-## Status
-- Day 7 complete (sessions, cookies, login authentication working end-to-end)
+## Tech Stack
 
-## Status
-- Day 8 complete (login_required decorator, route protection, logout)
+- **Backend:** Python, Flask
+- **Database:** SQLite
+- **Frontend:** HTML5, CSS3 (hand-written, no frameworks), vanilla JavaScript (preview modal)
+- **Auth:** Flask sessions, Werkzeug password hashing
 
-## Status
-- Day 9 complete (dashboard page, Jinja2 templating, conditional rendering)
+## Project Structure
 
-## Status
-- Day 10 complete (flash messages, error handling, Week 2 auth review)
+securevault/
+├── app.py                 # Main Flask application and routes
+├── database.py             # Database connection and schema setup
+├── auth.py                 # login_required decorator
+├── requirements.txt
+├── about.html               # Early static HTML practice page (Day 2, not served by Flask)
+├── static/
+│   ├── style.css
+│   └── uploads/
+│       └── .gitkeep         # Keeps the folder tracked; actual uploads are gitignored
+├── templates/
+│   ├── register.html
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── upload.html
+│   ├── 404.html
+│   └── 500.html
+└── README.md
 
-## Status
-- Day 11 complete (file handling theory, upload form UI, multipart/form-data)
+## Setup & Installation
 
-## Status
-- Day 12 complete (upload backend, file validation, secure unique filenames)
+```bash
+# Clone the repository
+git clone https://github.com/akshitbansal1211/securevault.git
+cd securevault
 
-## Status
-- Day 13 complete (files table, foreign keys, upload metadata tracking)
+# Create and activate a virtual environment
+python -m venv venv
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # Mac/Linux
 
-## Status
-- Day 14 complete (dashboard displays real uploaded files, per-user filtering, UTC-to-local timestamp conversion)
+# Install dependencies
+pip install -r requirements.txt
 
-## Status
-- Day 15 complete (file download, IDOR protection via ownership checks)
+# Run the app
+python app.py
+```
+Then visit `http://127.0.0.1:5000` in your browser.
 
-## Status
-- Day 16 complete (image preview, Content-Disposition, MIME type handling)
+## Screenshots
 
-## Status
-- Day 17 complete (PDF preview, inline modal viewer, first client-side JavaScript)
+*(Coming soon)*
 
-## Status
-- Day 18 complete (search backend, SQL LIKE pattern matching, query parameters)
+## Future Work (v1.1+)
 
-## Status
-- Day 19 complete (search bar UI, GET form, contextual empty states)
+- **Multi-tenancy** — isolated private workspaces so multiple organizations can use SecureVault independently, without seeing each other's users or files
+- File versioning / edit history
+- Admin dashboard with user management
+- Two-factor authentication
+- Cloud storage (S3) instead of local disk
 
-## Status
-- Day 20 complete (responsive design, media queries, mobile-friendly layout)
+## About
 
-## Status
-- Day 21 complete (custom 404/500 pages, full edge case testing — auth, uploads, search, IDOR all verified)
+Built by [Akshit Bansal](https://github.com/akshitbansal1211) as a self-directed full-stack learning project — covering HTML/CSS fundamentals, Flask, relational database design, authentication, session management, and real web security practices from first principles.
