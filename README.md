@@ -37,7 +37,6 @@ securevault/
 ├── database.py             # Database connection and schema setup
 ├── auth.py                 # login_required decorator
 ├── requirements.txt
-├── about.html               # Early static HTML practice page (Day 2, not served by Flask)
 ├── static/
 │   ├── style.css
 │   └── uploads/
