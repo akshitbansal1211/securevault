@@ -72,7 +72,17 @@ Then visit `http://127.0.0.1:5000` in your browser.
 
 ## Screenshots
 
-*(Coming soon)*
+**Login**
+![Login page](screenshots/screenshot_login.png)
+
+**Dashboard**
+![Dashboard with uploaded files](screenshots/Screenshot_dashboard.png)
+
+**File Preview**
+![Preview modal showing a file](screenshots/Screenshot_preview-modal.png)
+
+**Responsive / Mobile View**
+![Mobile responsive layout](screenshots/Screenshot_mobile-view.png)
 
 ## Future Work (v1.1+)
 
@@ -85,3 +95,5 @@ Then visit `http://127.0.0.1:5000` in your browser.
 ## About
 
 Built by [Akshit Bansal](https://github.com/akshitbansal1211) as a self-directed full-stack learning project — covering HTML/CSS fundamentals, Flask, relational database design, authentication, session management, and real web security practices from first principles.
+
+

@@ -45,13 +45,16 @@
        {% if files %}
     <ul class="file-list">
     {% for file in files %}
-        <li class="file-item">
+ <li class="file-item">
     <div class="file-info">
         <a href="{{ url_for('download', file_id=file['id']) }}" class="file-name">{{ file["original_name"] }}</a>
         {% set ext = file["original_name"].rsplit(".", 1)[1].lower() if "." in file["original_name"] else "" %}
         {% if ext in ["png", "jpg", "jpeg", "pdf"] %}
-          <a href="#" class="preview-link" onclick="showPreview('{{ url_for('preview', file_id=file['id']) }}', '{{ ext }}'); return false;">Preview</a>
+            <a href="#" class="preview-link" onclick="showPreview('{{ url_for('preview', file_id=file['id']) }}', '{{ ext }}'); return false;">Preview</a>
         {% endif %}
+        <form action="{{ url_for('delete', file_id=file['id']) }}" method="POST" class="delete-form" >
+            <button type="submit" class="delete-btn">Delete</button>
+        </form>
     </div>
     <span class="file-date">{{ file["uploaded_at"] }}</span>
 </li>

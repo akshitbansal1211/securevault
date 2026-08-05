@@ -203,6 +203,30 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template("500.html"), 500
-    
+
+@app.route("/delete/<int:file_id>", methods=["POST"])
+@login_required
+def delete(file_id):
+    conn = get_connection()
+    file = conn.execute(
+        "SELECT * FROM files WHERE id = ? AND owner_id = ?",
+        (file_id, session["user_id"])
+    ).fetchone()
+
+    if file is None:
+        abort(404)
+
+    # Delete from disk
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], file["stored_name"])
+    if os.path.exists(filepath):
+        os.remove(filepath)
+
+    # Delete from database
+    conn.execute("DELETE FROM files WHERE id = ?", (file_id,))
+    conn.commit()
+    conn.close()
+
+    flash(f"'{file['original_name']}' deleted successfully.", "success")
+    return redirect(url_for("dashboard"))
 if __name__ == "__main__":
     app.run(debug=True)
