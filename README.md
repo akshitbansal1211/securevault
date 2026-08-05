@@ -5,7 +5,7 @@
 ## Features
 
 - **User authentication** — registration and login with hashed passwords (Werkzeug/scrypt), session-based auth, and route protection via a custom decorator
-- **File management** — upload, download, and per-user file listing backed by a relational SQLite schema
+- **File management** — upload, download, preview, and securely delete files with per-user file ownership enforced by a relational SQLite schema
 - **In-browser preview** — images and PDFs render directly in a modal, no download required
 - **Search** — filter your files by name using SQL `LIKE` pattern matching
 - **Responsive design** — fully usable on mobile and tablet screens, not just desktop
@@ -22,7 +22,7 @@ This project was built with real security practices in mind, not just "does it w
 - Uploaded filenames sanitized (`secure_filename`) and given collision-proof unique names (UUID-based) to prevent path traversal and overwrite attacks
 - File uploads validated against an extension allow-list
 - Every file-access route (`download`, `preview`) enforces ownership checks (`WHERE id = ? AND owner_id = ?`) to prevent IDOR (Insecure Direct Object Reference) — verified through manual cross-account testing during development
-
+- Delete opreations verify file ownership before removing files, preventing unauthorized deletion
 ## Tech Stack
 
 - **Backend:** Python, Flask
