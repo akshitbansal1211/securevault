@@ -9,7 +9,7 @@ from database import get_connection, init_db
 from auth import login_required
 
 app = Flask(__name__)
-app.secret_key = "dev-secret-key-change-this-later"
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-this-later")
 
 UPLOAD_FOLDER = "static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf"}

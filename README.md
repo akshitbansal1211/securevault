@@ -96,4 +96,8 @@ Then visit `http://127.0.0.1:5000` in your browser.
 
 Built by [Akshit Bansal](https://github.com/akshitbansal1211) as a self-directed full-stack learning project — covering HTML/CSS fundamentals, Flask, relational database design, authentication, session management, and real web security practices from first principles.
 
+## Known Limitations (v1.0)
 
+- **Ephemeral file storage:** uploaded files are stored on the local server filesystem. On platforms like Render's free tier, the filesystem resets on redeploy — uploaded files will not persist between deployments. Cloud storage (AWS S3 or similar) is planned for v1.1.
+- **SQLite in production:** SQLite works well for a single-server deployment but doesn't scale to multiple concurrent server instances. A move to PostgreSQL is planned for v1.1.
+- **Timezone hardcoded to IST:** upload timestamps are converted to IST for display. A future version will detect and use the user's actual timezone.
