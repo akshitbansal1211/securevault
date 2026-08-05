@@ -25,7 +25,9 @@ init_db()  # creates the tables if they don't exist yet, runs once at startup
 
 @app.route("/")
 def home():
-    return "Hello, SecureVault!"
+    if "user_id" in session:
+        return redirect(url_for("dashboard"))
+    return redirect(url_for("login"))
 
 
 @app.route("/about")
