@@ -1,9 +1,9 @@
 import os
-import sqlite3
 import uuid
 from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, abort
 from werkzeug.security import generate_password_hash, check_password_hash
+import psycopg
 from werkzeug.utils import secure_filename
 from database import get_connection, init_db
 from auth import login_required
@@ -47,11 +47,11 @@ def register():
         conn = get_connection()
         try:
             conn.execute(
-                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+                "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
                 (username, email, hashed_password)
             )
             conn.commit()
-        except sqlite3.IntegrityError:
+        except psycopg.errors.UniqueViolation:
             flash("Username or email already exists. Please choose another.", "error")
             return redirect(url_for("register"))
         finally:
@@ -71,7 +71,7 @@ def login():
 
         conn = get_connection()
         user = conn.execute(
-            "SELECT * FROM users WHERE username = ?", (username,)
+            "SELECT * FROM users WHERE username = %s", (username,)
         ).fetchone()
         conn.close()
 
@@ -94,12 +94,12 @@ def dashboard():
     conn = get_connection()
     if search_term:
         files = conn.execute(
-            "SELECT * FROM files WHERE owner_id = ? AND original_name LIKE ? ORDER BY uploaded_at DESC",
+            "SELECT * FROM files WHERE owner_id = %s AND original_name LIKE %s ORDER BY uploaded_at DESC",
             (session["user_id"], f"%{search_term}%")
         ).fetchall()
     else:
         files = conn.execute(
-            "SELECT * FROM files WHERE owner_id = ? ORDER BY uploaded_at DESC",
+            "SELECT * FROM files WHERE owner_id = %s ORDER BY uploaded_at DESC",
             (session["user_id"],)
         ).fetchall()
     conn.close()
@@ -108,8 +108,9 @@ def dashboard():
     files_local = []
     for file in files:
         file_dict = dict(file)
-        utc_time = datetime.strptime(file_dict["uploaded_at"], "%Y-%m-%d %H:%M:%S")
-        utc_time = utc_time.replace(tzinfo=timezone.utc)
+        utc_time = file_dict["uploaded_at"]
+        if utc_time.tzinfo is None:
+            utc_time = utc_time.replace(tzinfo=timezone.utc)
         local_time = utc_time.astimezone(IST)
         file_dict["uploaded_at"] = local_time.strftime("%Y-%m-%d %I:%M %p")
         files_local.append(file_dict)
@@ -149,7 +150,7 @@ def upload():
 
         conn = get_connection()
         conn.execute(
-            "INSERT INTO files (owner_id, original_name, stored_name) VALUES (?, ?, ?)",
+            "INSERT INTO files (owner_id, original_name, stored_name) VALUES (%s, %s, %s)",
             (session["user_id"], original_name, unique_name)
         )
         conn.commit()
@@ -165,7 +166,7 @@ def upload():
 def download(file_id):
     conn = get_connection()
     file = conn.execute(
-        "SELECT * FROM files WHERE id = ? AND owner_id = ?",
+        "SELECT * FROM files WHERE id = %s AND owner_id = %s",
         (file_id, session["user_id"])
     ).fetchone()
     conn.close()
@@ -185,7 +186,7 @@ def download(file_id):
 def preview(file_id):
     conn = get_connection()
     file = conn.execute(
-        "SELECT * FROM files WHERE id = ? AND owner_id = ?",
+        "SELECT * FROM files WHERE id = %s AND owner_id = %s",
         (file_id, session["user_id"])
     ).fetchone()
     conn.close()
@@ -211,7 +212,7 @@ def server_error(e):
 def delete(file_id):
     conn = get_connection()
     file = conn.execute(
-        "SELECT * FROM files WHERE id = ? AND owner_id = ?",
+        "SELECT * FROM files WHERE id = %s AND owner_id = %s",
         (file_id, session["user_id"])
     ).fetchone()
 
@@ -224,7 +225,7 @@ def delete(file_id):
         os.remove(filepath)
 
     # Delete from database
-    conn.execute("DELETE FROM files WHERE id = ?", (file_id,))
+    conn.execute("DELETE FROM files WHERE id = %s", (file_id,))
     conn.commit()
     conn.close()
 
